@@ -9,6 +9,11 @@ What are a {Large Animal} and backpacking {Small Animal} to do? Before you can h
 new = template
 
 
+def trypytest():
+    """To test pytest setup."""
+    return(True)
+
+
 def welcome(new):
     """Explain the game to the user and invoke check_string()."""
     print('Welcome to Madlib!')
