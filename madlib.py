@@ -3,18 +3,18 @@ from textwrap import dedent
 WIDTH = 71
 
 
-def trypytest():
-    """To test pytest setup."""
-    pass
+def read_file(infile):
+    with open(infile) as f:
+        new = f.read()
+        return new
 
 
-def welcome(new):
+def welcome():
     """Explain the game to the user and invoke check_string()."""
     print('Welcome to Madlib - Make me a video game!')
     print('To quit at any time, enter "quit".')
     print(' ' * WIDTH)
     print('Please follow the promps to enter your choices of words.')
-    return(new)
 
 
 def check_string(new):
@@ -34,7 +34,6 @@ def check_string(new):
 
 def question_1(ques, new):
     """Prompt the user to enter their word and pass the word to the next function."""
-    # status = True
     print('Please enter a(n) ' + ques + ' of your choice.')
     user_input = input()
     if user_input == 'quit':
@@ -50,34 +49,33 @@ def update_newlist(ques, new, user_input):
 
 
 if __name__ == '__main__':
-    with open('infile.txt') as f:
-        new = f.read()
+    new = read_file('infile.txt')
 
-    welcome(new)
+    welcome()
     while '{' in new:
         ques, new = check_string(new)
         ques, new, user_input = question_1(ques, new)
         new = update_newlist(ques, new, user_input)
 
-with open('outfile.txt', 'w') as wf:
-    wf.write(new)
+    with open('outfile.txt', 'w') as wf:
+        wf.write(new)
 
 
-print(dedent(f'''
-{(' * ' * (WIDTH//3) )}
-{(' ' * WIDTH)}
-{(' ' * WIDTH)}
-{('Following is your Madlib result:')}
-{(' ' * WIDTH)}
-{(' ' * WIDTH)}
-{(new)}
-{(' ' * WIDTH)}
-{(' ' * WIDTH)}
-{(' ' * WIDTH)}
-{(' * ' * (WIDTH//3) )}
-{(' ' * WIDTH)}
-{(' ' * WIDTH)}
-{(' ' * WIDTH)}
-{(' ' * WIDTH)}
-{('I hope you had fun. Thank you for playing.')}
-        '''))
+    print(dedent(f'''
+    {(' * ' * (WIDTH//3) )}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {('Following is your Madlib result:')}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(new)}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(' * ' * (WIDTH//3) )}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {('I hope you had fun. Thank you for playing.')}
+    '''))
