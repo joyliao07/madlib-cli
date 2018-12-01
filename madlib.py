@@ -1,8 +1,6 @@
 """Madlib program that replace user's inputs in the template text string."""
 from textwrap import dedent
-import sys
 WIDTH = 71
-status = True
 
 
 def trypytest():
@@ -34,12 +32,12 @@ def check_string(new):
 
 def question_1(ques, new):
     """Prompt the user to enter their word and pass the word to the next function."""
+    # status = True
     print('Please enter a(n) ' + ques + ' of your choice.')
-    if input() is not 'quit':
-        user_input = input()
-    else:
-        sys.exit()
-        status = False
+    user_input = input()
+    if user_input == 'quit':
+        exit()
+        return()
     return(ques, new, user_input)
 
 
@@ -54,7 +52,7 @@ if __name__ == '__main__':
         new = f.read()
 
     welcome(new)
-    while '{' in new and status is True:
+    while '{' in new:
         ques, new = check_string(new)
         ques, new, user_input = question_1(ques, new)
         new = update_newlist(ques, new, user_input)
