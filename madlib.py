@@ -1,12 +1,10 @@
 """Madlib program that replace user's inputs in the template text string."""
 
-with open('infile.txt') as f:
-    new = f.read()
 
 
 def trypytest():
     """To test pytest setup."""
-    return(True)
+    pass
 
 
 def welcome(new):
@@ -14,7 +12,7 @@ def welcome(new):
     print('Welcome to Madlib!')
     print('Make me a video game!')
     print('Please follow the promps to enter your choices of words.')
-    check_string(new)
+    return(new)
 
 
 def check_string(new):
@@ -30,6 +28,7 @@ def check_string(new):
             rec = False
             break
     question_1(ques, new)
+    return (ques, new)    ############
 
 
 def question_1(ques, new):
@@ -37,6 +36,7 @@ def question_1(ques, new):
     print('Please enter a(n) ' + ques + ' of your choice.')
     user_input = input()
     update_newlist(ques, new, user_input)
+    return (ques, new, user_input) ###########
 
 
 def update_newlist(ques, new, user_input):
@@ -44,6 +44,7 @@ def update_newlist(ques, new, user_input):
     new = new.replace(ques, user_input, 1)
     if '{' in new:
         check_string(new)
+        return(new)
     else:
         with open('outfile.txt', 'w') as wf:
             wf.write(new)
@@ -52,6 +53,10 @@ def update_newlist(ques, new, user_input):
         print('I hope you had fun.')
         print('Thank you for playing.')
         exit()
+        return(new)
 
-
-welcome(new)
+if __name__ == '__main__':
+    with open('infile.txt') as f:
+        new = f.read()
+    welcome(new)
+    check_string(new)

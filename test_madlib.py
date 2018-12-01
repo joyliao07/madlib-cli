@@ -9,12 +9,12 @@ from madlib import welcome, trypytest
 
 def test_trypytest():
     """Test the pytest setup."""
-    expected = True
-    assert trypytest() == expected
-    # assert trypytest()
+    assert trypytest
 
 
-
+def test_welcome_output_parameter():
+    outputType = type(welcome('a string'))
+    assert outputType == str
 
 
 
