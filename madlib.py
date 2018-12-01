@@ -11,6 +11,8 @@ def trypytest():
 def welcome(new):
     """Explain the game to the user and invoke check_string()."""
     print('Welcome to Madlib - Make me a video game!')
+    print('To quit at any time, enter "quit".')
+    print(' ' * WIDTH)
     print('Please follow the promps to enter your choices of words.')
     return(new)
 
