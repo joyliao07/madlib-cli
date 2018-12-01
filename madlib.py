@@ -4,13 +4,14 @@ WIDTH = 71
 
 
 def read_file(infile):
+    """To locate and read a text file."""
     with open(infile) as f:
         new = f.read()
         return new
 
 
 def welcome():
-    """Explain the game to the user and invoke check_string()."""
+    """Explain the game to the user and provide baisc rules of the game."""
     print('Welcome to Madlib - Make me a video game!')
     print('To quit at any time, enter "quit".')
     print(' ' * WIDTH)
@@ -33,7 +34,7 @@ def check_string(new):
 
 
 def question_1(ques, new):
-    """Prompt the user to enter their word and pass the word to the next function."""
+    """Prompt the user to enter their word and pass the input as user_input."""
     print('Please enter a(n) ' + ques + ' of your choice.')
     user_input = input()
     if user_input == 'quit':
@@ -43,9 +44,16 @@ def question_1(ques, new):
 
 
 def update_newlist(ques, new, user_input):
-    """Update the 'new' string with user's input and decide the next step."""
+    """Edit the string with user's input."""
     new = new.replace(ques, user_input, 1)
     return(new)
+
+
+def write_file(path, contents):
+    """To write the output file with updated contents."""
+    with open(path, 'w') as wf:
+        updated = wf.write(contents)
+    return updated
 
 
 if __name__ == '__main__':
@@ -56,10 +64,7 @@ if __name__ == '__main__':
         ques, new = check_string(new)
         ques, new, user_input = question_1(ques, new)
         new = update_newlist(ques, new, user_input)
-
-    with open('outfile.txt', 'w') as wf:
-        wf.write(new)
-
+        write_file('outfile.txt', new)
 
     print(dedent(f'''
     {(' * ' * (WIDTH//3) )}
