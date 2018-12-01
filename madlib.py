@@ -1,6 +1,9 @@
 """Madlib program that replace user's inputs in the template text string."""
 from textwrap import dedent
+import sys
 WIDTH = 71
+status = True
+
 
 def trypytest():
     """To test pytest setup."""
@@ -9,8 +12,7 @@ def trypytest():
 
 def welcome(new):
     """Explain the game to the user and invoke check_string()."""
-    print('Welcome to Madlib!')
-    print('Make me a video game!')
+    print('Welcome to Madlib - Make me a video game!')
     print('Please follow the promps to enter your choices of words.')
     return(new)
 
@@ -33,7 +35,11 @@ def check_string(new):
 def question_1(ques, new):
     """Prompt the user to enter their word and pass the word to the next function."""
     print('Please enter a(n) ' + ques + ' of your choice.')
-    user_input = input()
+    if input() is not 'quit':
+        user_input = input()
+    else:
+        sys.exit()
+        status = False
     return(ques, new, user_input)
 
 
@@ -48,7 +54,7 @@ if __name__ == '__main__':
         new = f.read()
 
     welcome(new)
-    while '{' in new:
+    while '{' in new and status is True:
         ques, new = check_string(new)
         ques, new, user_input = question_1(ques, new)
         new = update_newlist(ques, new, user_input)
@@ -56,21 +62,22 @@ if __name__ == '__main__':
 with open('outfile.txt', 'w') as wf:
     wf.write(new)
 
+
 print(dedent(f'''
+{(' * ' * (WIDTH//3) )}
+{(' ' * WIDTH)}
+{(' ' * WIDTH)}
 {('Following is your Madlib result:')}
-{('** ' * (WIDTH//3) )}
+{(' ' * WIDTH)}
+{(' ' * WIDTH)}
 {(new)}
-{('** ' * (WIDTH//3) )}
+{(' ' * WIDTH)}
+{(' ' * WIDTH)}
+{(' ' * WIDTH)}
+{(' * ' * (WIDTH//3) )}
+{(' ' * WIDTH)}
+{(' ' * WIDTH)}
 {(' ' * WIDTH)}
 {(' ' * WIDTH)}
 {('I hope you had fun. Thank you for playing.')}
         '''))
-exit()
-
-
-
-
-
-
-
-
