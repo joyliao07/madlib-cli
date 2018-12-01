@@ -1,25 +1,21 @@
 """Madlib program that replace user's inputs in the template text string."""
-template = """
-Make Me A Video Game!
-
-I the {Adjective} and {Adjective} {A First Name} have {Past Tense Verb} {A First Name}'s {Adjective} sister and plan to steal her {Adjective} {Plural Noun}!
-
-What are a {Large Animal} and backpacking {Small Animal} to do? Before you can help {A Girl's Name}, you'll have to collect the {Adjective} {Plural Noun} and {Adjective} {Plural Noun} that open up the {Number 1-50} worlds connected to A {First Name's} Lair. There are {Number} {Plural Noun} and {Number} {Plural Noun} in the game, along with hundreds of other goodies for you to find.
-"""
-new = template
+from textwrap import dedent
+WIDTH = 71
 
 
-def trypytest():
-    """To test pytest setup."""
-    return(True)
+def read_file(infile):
+    """To locate and read a text file."""
+    with open(infile) as f:
+        new = f.read()
+        return new
 
 
-def welcome(new):
-    """Explain the game to the user and invoke check_string()."""
-    print('Welcome to Madlib!')
-    print('Make me a video game!')
+def welcome():
+    """Explain the game to the user and provide baisc rules of the game."""
+    print('Welcome to Madlib - Make me a video game!')
+    print('To quit at any time, enter "quit".')
+    print(' ' * WIDTH)
     print('Please follow the promps to enter your choices of words.')
-    check_string(new)
 
 
 def check_string(new):
@@ -34,27 +30,57 @@ def check_string(new):
         if what == '}':
             rec = False
             break
-    question_1(ques, new)
+    return(ques, new)
 
 
 def question_1(ques, new):
-    """Prompt the user to enter their word and pass the word to the next function."""
+    """Prompt the user to enter their word and pass the input as user_input."""
     print('Please enter a(n) ' + ques + ' of your choice.')
     user_input = input()
-    update_newlist(ques, new, user_input)
+    if user_input == 'quit':
+        exit()
+        return()
+    return(ques, new, user_input)
 
 
 def update_newlist(ques, new, user_input):
-    """Update the 'new' string with user's input and decide the next step."""
+    """Edit the string with user's input."""
     new = new.replace(ques, user_input, 1)
-    if '{' in new:
-        check_string(new)
-    else:
-        print('Following is your Madlib result:')
-        print(new)
-        print('I hope you had fun.')
-        print('Thank you for playing.')
-        exit()
+    return(new)
 
 
-welcome(new)
+def write_file(path, contents):
+    """To write the output file with updated contents."""
+    with open(path, 'w') as wf:
+        updated = wf.write(contents)
+    return updated
+
+
+if __name__ == '__main__':
+    new = read_file('infile.txt')
+
+    welcome()
+    while '{' in new:
+        ques, new = check_string(new)
+        ques, new, user_input = question_1(ques, new)
+        new = update_newlist(ques, new, user_input)
+        write_file('outfile.txt', new)
+
+    print(dedent(f'''
+    {(' * ' * (WIDTH//3) )}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {('Following is your Madlib result:')}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(new)}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(' * ' * (WIDTH//3) )}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {(' ' * WIDTH)}
+    {('I hope you had fun. Thank you for playing.')}
+    '''))
