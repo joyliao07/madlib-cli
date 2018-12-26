@@ -1,11 +1,10 @@
 # MADLIB-CLI
 
 
-401python lab03
-
-
 Author: Joyce Liao
 Version: 1.0.0
+
+
 
 
 ## OVERVIEW
